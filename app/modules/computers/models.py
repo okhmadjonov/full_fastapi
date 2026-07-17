@@ -19,6 +19,10 @@ class Computer(Base):
     
     # Qaysi user yaratganini bog'lash
     created_by_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    
-    # User modeli bilan aloqa (Relationship)
     creator = relationship("User", backref="computers")
+
+    # Qaysi bo'limda ishlab chiqarilgani (Foreign Key)
+    department_id = Column(Integer, ForeignKey("departments.id"), nullable=True)
+    
+    # Aloqa (Relationship)
+    department = relationship("Department", back_populates="computers")

@@ -15,7 +15,6 @@ class UserService:
 
     @staticmethod
     def create_user(db: Session, user_in: UserCreate) -> User:
-        # Email va Username band emasligini tekshirish
         if UserRepository.get_by_username(db, user_in.username):
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
@@ -38,10 +37,8 @@ class UserService:
         db_user = UserService.get_user(db, user_id)
         UserRepository.delete(db, db_user)
 
-    # Rollar uchun default foydalanuvchilarni seed qilish funksiyasi
     @staticmethod
     def seed_users(db: Session):
-        # Director bor yoki yo'qligini tekshiramiz
         director_exists = db.query(User).filter(User.role == "director").first()
         if not director_exists:
             # 1. Director yaratish
